@@ -2,15 +2,21 @@ from django.shortcuts import render
 from django.contrib import messages
 import requests
 import datetime
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def index(request):
     city = request.POST.get('city', 'indore')
 
-    weather_url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid=db2e02e0a46b72115018b6756eca7a9a'
+    WEATHER_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
+    print(f"Weather API Key: {WEATHER_API_KEY}")
+    weather_url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API_KEY}'
     PARAMS = {'units':'metric'}
 
     # Google Custom Search API setup
-    API_KEY = 'AIzaSyBGcD-eyz_Lcy0MpATD3Vny6Q1fFIXllxA'
+    API_KEY = os.getenv('GOOGLE_API_KEY')
     SEARCH_ENGINE_ID = '53783c46f8ea64351'
     query = f"{city} 1920x1080"
     start = 1
@@ -35,7 +41,8 @@ def index(request):
         exception_occurred = False
 
     except Exception as e:
-        messages.error(request, f"Error fetching data: {e}")
+        messages.error(request, f"Error fetching data. Please check your API keys and city name.")
+        print(f"Exception details: {type(e).__name__} - {e}")
         description = 'clear sky'
         icon = '01d'
         temp = 25

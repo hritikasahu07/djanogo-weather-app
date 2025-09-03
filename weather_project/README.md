@@ -46,6 +46,15 @@ A simple weather application built with Django that fetches and displays weather
 
 ## Configuration
 
+-   **Environment Variables:**
+    -   Create a `.env` file in the project root.
+    -   Add your OpenWeatherMap API key and Google API key:
+        ```
+        OPENWEATHERMAP_API_KEY=YOUR_OPENWEATHERMAP_API_KEY
+        GOOGLE_API_KEY=YOUR_GOOGLE_API_KEY
+        ```
+
+
 -   **OpenWeatherMap API Key:**
     -   Sign up for an account at [OpenWeatherMap](https://openweathermap.org/) and obtain an API key.
     -   Set the `OPENWEATHERMAP_API_KEY` environment variable in the `.env` file.
@@ -54,7 +63,7 @@ A simple weather application built with Django that fetches and displays weather
 
 -   Django
 -   requests
--   python-dotenv
+-   python-dotenv (for loading environment variables)
 
 ## Project Structure
 
