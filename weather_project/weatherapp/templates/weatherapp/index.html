@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body style="
+{% if exception_occurred %}
+    background-image: url('https://images.pexels.com/photos/3008509/pexels-photo-3008509.jpeg?auto=compress&cs=tinysrgb&w=1600');
+{% else %}
+    background-image: url('{{ image_url }}');
+{% endif %}
+    background-size: cover;
+    background-repeat: no-repeat;
+">
+    <div class="container">
+        <h1>Weather App</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter city name">
+            <button type="submit" class="btn">Get Weather</button>
+        </form>
+        <div class="weather">
+            <div class="left">
+                <p>{{ temp }}°C</p>
+                <h2>{{ city|title }}</h2>
+            </div>
+            <div class="right">
+                <div class="icon">
+                    <img src="http://openweathermap.org/img/wn/{{ icon }}@2x.png" alt="Weather icon">
+                </div>
+                <div class="condition">
+                    <p>{{ description|title }}</p>
+                    <p>{{ day }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if exception_occurred %}
+    <script>
+        window.onload = function() {
+            alert("Entered data is not available");
+        }
+    </script>
+    {% endif %}
+</body>
+</html>
